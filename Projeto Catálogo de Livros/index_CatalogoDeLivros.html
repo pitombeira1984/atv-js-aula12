@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Livros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        h1{
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        li.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+        button:hover {
+            background-color: #ff4500;
+        }
+        .complete-button {
+            background-color: #4CAF50;
+            margin-left: 5rem;
+            
+        }
+        .complete-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Catálogo de Livros</h1>
+    <input type="text" id="tituloInput" placeholder="Título do Livro">
+    <input type="text" id="autorInput" placeholder="Autor">
+    <input type="text" id="generoInput" placeholder="Gênero">
+    <input type="text" id="anoInput" placeholder="Ano de Publicação">
+    <input type="number" id="avaliacaoInput" placeholder="Avaliação do Usuário 0-5" min="0" max="5">
+    <button onclick="addBook()">Adicionar</button>
+    <ul id="bookList"></ul>
+
+    <script>
+        function addBook() {
+            const tituloInput = document.getElementById('tituloInput').value.trim();
+            const autorInput = document.getElementById('autorInput').value.trim();
+            const generoInput = document.getElementById('generoInput').value.trim();
+            const anoInput = document.getElementById('anoInput').value.trim();
+            const avaliacaoInput = document.getElementById('avaliacaoInput').value.trim();
+
+            if (tituloInput && autorInput && generoInput && anoInput && avaliacaoInput) {
+                const bookList = document.getElementById('bookList');
+                
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>Título:</strong> ${tituloInput}<br>
+                                <strong>Autor:</strong> ${autorInput}<br>
+                                <strong>Gênero:</strong> ${generoInput}<br>
+                                <strong>Ano:</strong> ${anoInput}<br>
+                                <strong>Avaliação:</strong> ${avaliacaoInput}`;
+
+                const completeButton = document.createElement('button');
+                completeButton.textContent = 'Concluir';
+                completeButton.classList.add('complete-button');
+                completeButton.addEventListener('click', function() {
+                    li.classList.toggle('completed');
+                });
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Excluir';
+                deleteButton.addEventListener('click', function() {
+                    bookList.removeChild(li);
+                });
+
+                li.appendChild(completeButton);
+                li.appendChild(deleteButton);
+                bookList.appendChild(li);
+
+                // Clear inputs after adding
+                document.getElementById('tituloInput').value = '';
+                document.getElementById('autorInput').value = '';
+                document.getElementById('generoInput').value = '';
+                document.getElementById('anoInput').value = '';
+                document.getElementById('avaliacaoInput').value = '';
+            } else {
+                alert("Por favor, preencha todos os campos.");
+            }
+        }
+    </script>
+</body>
+</html>
